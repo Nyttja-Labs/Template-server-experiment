@@ -44,6 +44,48 @@ body {
   padding: 2rem;
   text-align: center;
   background: linear-gradient(135deg, var(--background-color) 0%, white 100%);
+  scroll-behavior: smooth;
+}
+
+.hero-section {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.testimonials-section {
+  background: white;
+  padding: 4rem 2rem;
+  width: 100%;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background: var(--background-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: var(--muted-color);
+  margin-bottom: 1rem;
+}
+
+.testimonial-author {
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 .features-grid {
@@ -111,8 +153,34 @@ body {
 .minimal-footer {
   background-color: var(--text-color);
   color: white;
-  padding: 1rem;
+  padding: 2rem;
   text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-nav {
+  margin: 1rem 0;
+}
+
+.footer-nav a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footer-nav a:hover {
+  opacity: 0.8;
+}
+
+.footer-credits {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
