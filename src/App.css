@@ -60,9 +60,24 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f3f4f6, #ffffff);
+  background: linear-gradient(135deg, #2563eb, #1e40af);
   padding: 4rem 2rem;
   text-align: center;
+  color: white;
+}
+
+.hero h1 {
+  color: white;
+}
+
+.hero p {
+  color: rgba(255,255,255,0.9);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .hero h1 {
@@ -149,10 +164,93 @@ body {
   color: var(--muted-text);
 }
 
+.pricing {
+  padding: 4rem 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.pricing-card.popular {
+  border: 2px solid var(--primary-color);
+}
+
+.pricing-card h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.price span {
+  font-size: 1rem;
+  color: var(--muted-text);
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.pricing-card li {
+  margin: 0.5rem 0;
+}
+
 .footer {
   background-color: var(--text-color);
   color: white;
-  padding: 2rem 0;
+  padding: 4rem 0 2rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section {
+  text-align: left;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  margin-top: 0;
+}
+
+.footer-section a {
+  display: block;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  margin: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 2rem;
   text-align: center;
 }
 
