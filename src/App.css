@@ -78,10 +78,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+.cta-button {
   margin-top: 2rem;
 }
 

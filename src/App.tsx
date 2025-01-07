@@ -6,53 +6,35 @@ function App() {
       <header className="header">
         <div className="container">
           <h1 className="logo">AwesomeProduct</h1>
-          <nav>
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#contact">Contact</a>
-          </nav>
         </div>
       </header>
 
       <section className="hero">
         <div className="container">
-          <h1>Welcome to Our Awesome Product</h1>
+          <h1>Simplify Your Workflow</h1>
           <p>
-            Discover the future of innovation with our cutting-edge solution. 
-            Join thousands of satisfied users who are transforming their lives.
+            The all-in-one solution for modern teams. Fast, secure, and easy to use.
           </p>
-          <div className="cta-buttons">
-            <button 
-              className="cta-button primary"
-              onClick={() => window.location.href = '#signup'}
-            >
-              Get Started
-            </button>
-            <button 
-              className="cta-button secondary"
-              onClick={() => window.location.href = '#features'}
-            >
-              Learn More
-            </button>
-          </div>
+          <button 
+            className="cta-button primary"
+            onClick={() => window.location.href = '#signup'}
+          >
+            Get Started
+          </button>
         </div>
       </section>
 
       <section id="features" className="features">
         <div className="container">
-          <h2>Key Features</h2>
+          <h2>Why Choose Us</h2>
           <div className="feature-grid">
             <div className="feature-card">
-              <h3>⚡ Fast Performance</h3>
-              <p>Experience blazing fast speeds with our optimized architecture.</p>
+              <h3>⚡ Fast & Simple</h3>
+              <p>Get started in minutes with our intuitive interface.</p>
             </div>
             <div className="feature-card">
-              <h3>🔒 Secure & Reliable</h3>
-              <p>Enterprise-grade security to keep your data safe.</p>
-            </div>
-            <div className="feature-card">
-              <h3>🌍 Global Reach</h3>
-              <p>Available worldwide with 24/7 support in multiple languages.</p>
+              <h3>🔒 Built-in Security</h3>
+              <p>Your data is protected with enterprise-grade encryption.</p>
             </div>
           </div>
         </div>
@@ -60,7 +42,7 @@ function App() {
 
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 AwesomeProduct. All rights reserved.</p>
+          <p>&copy; 2025 AwesomeProduct</p>
         </div>
       </footer>
     </>
