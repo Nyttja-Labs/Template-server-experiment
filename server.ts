@@ -1,6 +1,7 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
 // deno run --allow-all --watch server.ts
+// ( --allow-run for spawning 'aider' and 'git', --allow-read/--allow-write if needed )
 const DEFAULT_PORT = 3001;
 const router = new Router();
 
@@ -8,7 +9,7 @@ const router = new Router();
  * POST /prompt
  * Request body JSON: { "q": "some instruction" }
  */
-router.post("/prompt", async (context: any) => {
+router.post("/prompt", async (context) => {
     try {
         const body = await context.request.body.json();
         const prompt = body.q;
@@ -26,6 +27,7 @@ router.post("/prompt", async (context: any) => {
             return;
         }
 
+        // Aider command
         const cmd = [
             "aider",
             "--model",
@@ -33,49 +35,84 @@ router.post("/prompt", async (context: any) => {
             "--no-show-model-warnings",
             "--no-browser",
             "--yes",
-            "--stream",
+            "--read",
+            "CONVENTIONS.md",
             "--auto-commits",
             "--message",
-            prompt
+            prompt,
         ];
 
         const currentWorkingDirectory = Deno.cwd();
-        console.log(currentWorkingDirectory);
+        console.log("CWD:", currentWorkingDirectory);
 
-        const process = Deno.run({
+        // 1) Run Aider
+        const aiderProcess = Deno.run({
             cmd,
             cwd: currentWorkingDirectory,
             stdout: "piped",
             stderr: "piped",
         });
 
-        // Wait for the process to finish
-        const [status, rawOutput, rawError] = await Promise.all([
-            process.status(),
-            process.output(),
-            process.stderrOutput(),
+        // Wait for Aider to finish
+        const [aiderStatus, rawOutput, rawError] = await Promise.all([
+            aiderProcess.status(),
+            aiderProcess.output(),
+            aiderProcess.stderrOutput(),
         ]);
 
-        // Convert Uint8Array -> string
+        aiderProcess.close();
+
         const output = new TextDecoder().decode(rawOutput);
         const errorOutput = new TextDecoder().decode(rawError);
 
-        // Close resources
-        process.close();
-
-        if (status.success) {
-            // Aider finished successfully
-            context.response.status = 200;
-            context.response.body = { success: true, output };
-        } else {
-            // Aider errored or exited with non-zero code
+        // Check if Aider succeeded
+        if (!aiderStatus.success) {
             context.response.status = 500;
             context.response.body = {
                 success: false,
-                error: `Aider process exited with code ${status.code}`,
+                error: `Aider process exited with code ${aiderStatus.code}`,
                 logs: errorOutput || output,
             };
+            return;
         }
+
+        console.log("Aider finished successfully. Now pushing changes...");
+
+        // 2) If Aider succeeded, run `git push origin main` (adjust if needed)
+        const gitPushProcess = Deno.run({
+            cmd: ["git", "push", "origin", "master"], // or your branch of choice
+            cwd: currentWorkingDirectory,
+            stdout: "piped",
+            stderr: "piped",
+        });
+
+        const [pushStatus, pushRawOutput, pushRawError] = await Promise.all([
+            gitPushProcess.status(),
+            gitPushProcess.output(),
+            gitPushProcess.stderrOutput(),
+        ]);
+
+        gitPushProcess.close();
+
+        const pushOutput = new TextDecoder().decode(pushRawOutput);
+        const pushErrorOutput = new TextDecoder().decode(pushRawError);
+
+        if (!pushStatus.success) {
+            context.response.status = 500;
+            context.response.body = {
+                success: false,
+                error: `git push exited with code ${pushStatus.code}`,
+                logs: pushErrorOutput || pushOutput,
+            };
+            return;
+        }
+
+        // All good: Aider auto-committed, then we pushed those commits to origin main
+        context.response.status = 200;
+        context.response.body = {
+            success: true,
+            output: `${output}\n\nPUSH SUCCESS:\n${pushOutput}`,
+        };
     } catch (err) {
         console.error("Invocation failed:", err);
         context.response.status = 500;
