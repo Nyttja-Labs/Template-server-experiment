@@ -2,7 +2,6 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
 // deno run --allow-all --watch server.ts
 const DEFAULT_PORT = 3001;
-
 const router = new Router();
 
 /**
@@ -13,6 +12,10 @@ router.post("/prompt", async (context: any) => {
     try {
         const body = await context.request.body.json();
         const prompt = body.q;
+
+        const v = Deno.env.get("DEEPSEEK_API_KEY");
+        console.log("VAR: ");
+        console.log(v);
 
         console.log(body);
         console.log(prompt);
